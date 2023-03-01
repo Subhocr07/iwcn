@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Editable Table</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900;1000&family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div className="container">
+        <div id="root"></div>
+    </div>
+    <script type="text/babel">
+        function CellEdit({ value, onChange }) {
+            return (
+                <td  >
+                    <input type="text" value={value} onChange={onChange} />
+                </td>
+            );
+        }
+
+        function RowEdit({ data, onChange }) {
+            const handleChange = (event, index) => {
+                const newData = [...data];
+                newData[index] = event.target.value;
+                onChange(newData);
+            };
+
+            return (
+                <tr className="tr">
+
+                    {data.map((value, index) => (
+                        <CellEdit
+                            key={index}
+                            value={value}
+                            onChange={(event) => handleChange(event, index)}
+                        />
+                    ))}
+                </tr>
+            );
+        }
+
+        function TableEdit({ data, onChange }) {
+            const handleRowChange = (newData, index) => {
+                const newDataList = [...data];
+                newDataList[index] = newData;
+                onChange(newDataList);
+            };
+
+            return (
+                <table border="1px solid">
+                    <tbody>
+                        <td>MONTH 1</td>
+                        {data.map((row, index) => (
+                            <RowEdit
+                                key={index}
+                                data={row}
+                                onChange={(newRowData) => handleRowChange(newRowData, index)}
+                            />
+                        ))}
+                    </tbody>
+                </table>
+            );
+        }
+
+
+        function App() {
+            const [data, setData] = React.useState([
+                ["Onboarding Call", "", "", "", ""],
+                ["Google Search Console Access", "", "", "", ""],
+                ["Google Analytics Access", "", "", "", ""],
+                ["Website Access", "", "", "", ""],
+                ["Technical Audit", "", "", "", ""],
+                ["Anchor Text and Semantic Analysis", "", "", "", ""],
+                ["Competition Analysis", "", "", "", ""],
+                ["Anchor Text / URL Mapping", "", "", "", ""],
+                ["Google Data Studio Report + Local Reporting Sulte", "", "", "", ""],
+                ["Site Level Optimixation", "", "", "", ""],
+                ["On Page Optimization", "", "", "", ""],
+                ["Content Creation", "", "", "", ""],
+                ["Premlum Press Release", "", "", "", ""],
+                ["Authority Niche Placements", "", "", "", ""],
+                ["Review Management", "", "", "", ""],
+                ["Index Links", "", "", "", ""],
+                ["Video Recap", "", "", "", ""],
+
+            ]);
+
+            const handleDataChange = (newData) => {
+                setData(newData);
+            };
+
+            const body = {
+                data: data,
+            }
+
+
+            //5.Every column should be editable and when edited the data should be ready to post to API(to any database)
+            function sendData(event, data) {
+                try {
+                    const response = fetch("", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json;charset=UTF-8"
+                        },
+                        body: JSON.stringify({ data: data })
+                    }).then((response) => {
+                        console.log(response);
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
+            };
+
+
+            return (
+                <TableEdit data={data} onChange={handleDataChange} />
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+</body>
+
+</html>
