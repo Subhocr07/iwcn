@@ -1,0 +1,87 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+td {
+    border: none;
+    text-align: center;
+}
+
+input[type="text"] {
+    width: -webkit-fill-available;
+    height: 26px;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 11px;
+    border: 1px solid grey;
+    transition: background .3s ease-in;
+}
+
+input[type="text"]:hover {
+    background-color: #1477cf;
+    color: wheat;
+    cursor: pointer;
+}
+
+.inp {
+    border: 1px solid;
+
+}
+
+.inp>input {
+    border: none;
+    width: 100px;
+
+}
+
+.tr {
+    border: 2px solid red;
+}
+
+.tr:hover {
+    color: blue;
+}
+
+table {
+    border: 2px solid black;
+    padding: 8px;
+    margin: 15px;
+    width: 100vw;
+    height: 90vh;
+    background-color: #f0ffffa1;
+}
+
+div#root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+    background-color: grey;
+}
+
+/* hide header on small screens */
+@media only screen and (max-width: 767px) {
+    thead {
+        display: none;
+    }
+
+    tr {
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    td {
+        display: block;
+        text-align: right;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+    }
+}
